@@ -28,20 +28,20 @@ fn main() {
         .next()
         .unwrap();
 
-    let custom_config = Config {
-      read_buffer_size: 32768 * 4,
-      write_buffer_size: 32768 * 4,
-      read_timeout: None, // linux only
-      write_timeout: None, // linux only
-      bpf_fd_attempts: 1000, // linux only
-      linux_fanout: None, // linux only
-      channel_type: ChannelType::Layer2,
-    };
+    // let custom_config = Config {
+    //   read_buffer_size: 32768 * 4,
+    //   write_buffer_size: 32768 * 4,
+    //   read_timeout: None, // linux only
+    //   write_timeout: None, // linux only
+    //   bpf_fd_attempts: 1000, // linux only
+    //   linux_fanout: None, // linux only
+    //   channel_type: ChannelType::Layer2,
+    // };
 
-    // let default_config = Default::default();
+    let default_config = Default::default();
 
     // Create a channel to receive on
-    let (_, mut rx) = match datalink::channel(&interface, custom_config) {
+    let (_, mut rx) = match datalink::channel(&interface, default_config) {
         Ok(Ethernet(tx, rx)) => (tx, rx),
         Ok(_) => panic!("packetdump: unhandled channel type: {}"),
         Err(e) => panic!("packetdump: unable to create channel: {}", e),
